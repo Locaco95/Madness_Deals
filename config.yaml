@@ -1,0 +1,47 @@
+# ===== إعدادات بوت العروض =====
+telegram:
+  token: ""                # يُقرأ من GitHub Secrets     # من @BotFather
+  chat_id: ""              # يُقرأ من GitHub Secrets   # جروب 🔥عروض مجنونة (@Madness_deals)
+db: deals.db
+interval_minutes: 60
+
+rules:
+  history_days: 30            # نافذة مقارنة السعر
+  min_history: 3              # عدد القراءات قبل الحكم بأن العرض "حقيقي"
+  real_drop_pct: 15           # يجب أن يقل عن متوسط سعره الفعلي بهذه النسبة
+  unverified_min_claimed_pct: 50   # منتج جديد: لا تنبيه إلا لو الخصم المعلن ≥ هذا
+  min_price: 200              # تجاهل المنتجات الأرخص من هذا
+  alert_cooldown_hours: 24    # لا تكرار لنفس المنتج إلا لو نزل سعره أكثر
+
+stores:
+  - name: جوميا
+    urls:
+      - https://www.jumia.com.eg/flash-sales/
+      - https://www.jumia.com.eg/mlp-top-deals/
+      - https://www.jumia.com.eg/phones-tablets/?sort=discount
+      - https://www.jumia.com.eg/electronics/?sort=discount
+      - https://www.jumia.com.eg/home-office-appliances/?sort=discount
+    render: true          # جوميا تحجب الطلبات العادية (403) — نفتحها بمتصفح حقيقي
+    selectors: {card: "article.prd", title: "h3.name", price: "div.prc", old: "div.old", link: "a.core"}
+
+  - name: أمازون مصر
+    urls:
+      - https://www.amazon.eg/s?i=electronics&rh=p_n_deal_type%3A23826280031&language=ar_AE
+      - https://www.amazon.eg/s?k=%D8%B9%D8%B1%D9%88%D8%B6&language=ar_AE
+    selectors: {card: "div[data-component-type='s-search-result']", title: "h2", price: "span.a-price:not(.a-text-price) span.a-offscreen", old: "span.a-text-price span.a-offscreen", link: "h2 a, a.a-link-normal"}
+
+  - name: كنز
+    urls: [https://kenzz.com/]
+    render: true          # موقع يعتمد على جافاسكربت
+
+  - name: موبايل شوب
+    urls: [https://www.mobileshop.com.eg/]
+    render: true
+
+  - name: فودافون
+    urls: [https://eshop.vodafone.com.eg/ar/]
+    render: true
+
+  - name: اتصالات
+    urls: [https://www.etisalat.eg/etisalat/portal/shop]
+    render: true
